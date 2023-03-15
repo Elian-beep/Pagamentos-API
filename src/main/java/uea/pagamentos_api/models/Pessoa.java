@@ -3,6 +3,7 @@ package uea.pagamentos_api.models;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,15 +18,18 @@ public class Pessoa implements Serializable {
 	private Long codigo;
 	private String nome;
 	private Boolean ativo;
+	@Embedded
+	private Endereco endereco;
 
 	public Pessoa() {
 	}
 
-	public Pessoa(Long codigo, String nome, Boolean ativo) {
+	public Pessoa(Long codigo, String nome, Boolean ativo, Endereco endereco) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.ativo = ativo;
+		this.endereco = endereco;
 	}
 
 	public Long getCodigo() {
@@ -50,6 +54,14 @@ public class Pessoa implements Serializable {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
