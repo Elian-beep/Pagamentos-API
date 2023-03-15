@@ -1,8 +1,14 @@
 package uea.pagamentos_api.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +26,31 @@ public class LancamentoResource {
 	@PostMapping
 	public ResponseEntity<Lancamento> criar(@RequestBody Lancamento lancamento){
 		Lancamento lancamentoSalvo = lancamentoService.criar(lancamento);
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(lancamentoSalvo.getCodigo()).toUri();
 		return ResponseEntity.ok().body(lancamentoSalvo);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Lancamento>> listar(){
+		List<Lancamento> lancamentos = lancamentoService.listar();
+		return ResponseEntity.ok().body(lancamentos);
+	}
+	
+	@GetMapping(value = "/{codigo}")
+	public ResponseEntity<Lancamento> buscarPorCodigo(@PathVariable Long codigo){
+		Lancamento lancamento = lancamentoService.buscarPorCodigo(codigo);
+		return ResponseEntity.ok().body(lancamento);
+	}
+	
+	@DeleteMapping(value = "/{codigo}")
+	public ResponseEntity<Void> excluir(@PathVariable Long codigo){
+		lancamentoService.excluir(codigo);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value = "/{codigo}")
+	public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @RequestBody Lancamento lancamento){
+		Lancamento lancamentoSalva = lancamentoService.atualizar(codigo, lancamento);
+		return ResponseEntity.ok().body(lancamentoSalva);
 	}
 }
