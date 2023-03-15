@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import uea.pagamentos_api.models.Categoria;
 import uea.pagamentos_api.services.CategoriaService;
 
@@ -24,7 +25,7 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 		
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria) {
 		Categoria categoriaSalva = categoriaService.criar(categoria);
 		return ResponseEntity.ok().body(categoriaSalva);
 	}
@@ -48,7 +49,7 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping(value = "/{codigo}")
-	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> atualizar(@Valid @PathVariable Long codigo, @RequestBody Categoria categoria){
 		Categoria categoriaSalva = categoriaService.atualizar(codigo, categoria);
 		return ResponseEntity.ok().body(categoriaSalva);
 	}

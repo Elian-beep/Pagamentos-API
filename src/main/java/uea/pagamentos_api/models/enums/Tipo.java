@@ -1,5 +1,5 @@
 package uea.pagamentos_api.models.enums;
 
-public enum TipoLancamento {
+public enum Tipo {
 	RECEITA, DESPESA
 }

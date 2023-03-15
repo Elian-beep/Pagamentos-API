@@ -3,10 +3,13 @@ package uea.pagamentos_api.models;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity //Cria a classe como tabela no BD
 //@Table(name = "tb_categoria")
@@ -16,6 +19,8 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Gerar id automático
 	private Long codigo;
+	@NotBlank(message = "Nome é obrigatório")
+	@Size(min=3, max=20, message = "O nome deve ter entre 3 a 20 caracteres")
 	private String nome;
 
 	public Categoria() {}
