@@ -39,4 +39,10 @@ public class PessoaService {
 
 		return pessoaRepository.save(pessoaSalva);
 	}
+	
+	public Pessoa atualizarPropAtivo(Long codigo, Boolean ativo) {
+		Pessoa pessoaSalva = pessoaRepository.findById(codigo).orElseThrow();
+		pessoaSalva.setAtivo(ativo);
+		return pessoaRepository.save(pessoaSalva);
+	}
 }

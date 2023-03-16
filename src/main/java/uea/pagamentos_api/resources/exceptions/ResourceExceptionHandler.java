@@ -40,4 +40,14 @@ public class ResourceExceptionHandler {
 		StandardError err = new StandardError(Instant.now(), status.value(), erros, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<StandardError> runtimeExepction(RuntimeException e, HttpServletRequest request){
+		List<String> erros = Arrays.asList(messageSource.getMessage("mensagem.impedimento", null, LocaleContextHolder.getLocale()));
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		
+		StandardError err = new StandardError(Instant.now(), status.value(), erros, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
 }

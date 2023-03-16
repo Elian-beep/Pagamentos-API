@@ -33,7 +33,8 @@ public class LancamentoService {
 		if (pessoa.getAtivo()) {
 			return lancamentoRepository.save(lancamento);
 		}
-		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
+//		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
+		throw new RuntimeException();
 	}
 	
 	public List<Lancamento> listar() {
