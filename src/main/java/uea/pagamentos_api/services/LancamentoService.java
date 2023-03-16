@@ -14,6 +14,7 @@ import uea.pagamentos_api.models.Pessoa;
 import uea.pagamentos_api.repositories.CategoriaRepository;
 import uea.pagamentos_api.repositories.LancamentoRepository;
 import uea.pagamentos_api.repositories.PessoaRepository;
+import uea.pagamentos_api.services.exceptions.PessoaInativaException;
 
 @Service
 public class LancamentoService {
@@ -34,7 +35,7 @@ public class LancamentoService {
 			return lancamentoRepository.save(lancamento);
 		}
 //		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
-		throw new RuntimeException();
+		throw new PessoaInativaException();
 	}
 	
 	public List<Lancamento> listar() {
@@ -58,7 +59,8 @@ public class LancamentoService {
 		if (pessoa.getAtivo()) {
 			return lancamentoRepository.save(lancamentoSalva);
 		}
-		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
+//		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
+		throw new PessoaInativaException();
 
 	}
 }
