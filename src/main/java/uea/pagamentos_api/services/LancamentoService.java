@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import uea.pagamentos_api.dto.ResumoLancamentoDto;
 import uea.pagamentos_api.models.Categoria;
 import uea.pagamentos_api.models.Lancamento;
 import uea.pagamentos_api.models.Pessoa;
 import uea.pagamentos_api.repositories.CategoriaRepository;
 import uea.pagamentos_api.repositories.LancamentoRepository;
 import uea.pagamentos_api.repositories.PessoaRepository;
+import uea.pagamentos_api.repositories.filters.LancamentoFilter;
 import uea.pagamentos_api.services.exceptions.PessoaInativaException;
 
 @Service
@@ -27,6 +27,10 @@ public class LancamentoService {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	
+	public List<ResumoLancamentoDto> resumir(LancamentoFilter lancamentoFilter){
+		return lancamentoRepository.filtrar(lancamentoFilter);
+	}
 	
 	public Lancamento criar(Lancamento lancamento) {
 		Pessoa pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo()).orElseThrow();
