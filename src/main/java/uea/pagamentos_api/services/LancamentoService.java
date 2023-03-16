@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import uea.pagamentos_api.models.Categoria;
 import uea.pagamentos_api.models.Lancamento;
@@ -28,7 +30,10 @@ public class LancamentoService {
 	public Lancamento criar(Lancamento lancamento) {
 		Pessoa pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo()).orElseThrow();
 		Categoria categoria = categoriaRepository.findById(lancamento.getCategoria().getCodigo()).orElseThrow();
-		return lancamentoRepository.save(lancamento);
+		if (pessoa.getAtivo()) {
+			return lancamentoRepository.save(lancamento);
+		}
+		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
 	}
 	
 	public List<Lancamento> listar() {
@@ -46,8 +51,13 @@ public class LancamentoService {
 
 	public Lancamento atualizar(Long codigo, Lancamento lancamento) {
 		Lancamento lancamentoSalva = lancamentoRepository.findById(codigo).orElseThrow();
+		Pessoa pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo()).orElseThrow();
+		Categoria categoria = categoriaRepository.findById(lancamento.getCategoria().getCodigo()).orElseThrow();
 		BeanUtils.copyProperties(lancamento, lancamentoSalva, "codigo");
+		if (pessoa.getAtivo()) {
+			return lancamentoRepository.save(lancamentoSalva);
+		}
+		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Pessoa inativa");
 
-		return lancamentoRepository.save(lancamentoSalva);
 	}
 }
