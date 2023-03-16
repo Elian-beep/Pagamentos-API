@@ -3,7 +3,6 @@ package uea.pagamentos_api.models;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

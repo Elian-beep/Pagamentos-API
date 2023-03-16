@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uea.pagamentos_api.models.Endereco;
 import uea.pagamentos_api.models.Pessoa;
 import uea.pagamentos_api.repositories.PessoaRepository;
 
@@ -43,6 +44,12 @@ public class PessoaService {
 	public Pessoa atualizarPropAtivo(Long codigo, Boolean ativo) {
 		Pessoa pessoaSalva = pessoaRepository.findById(codigo).orElseThrow();
 		pessoaSalva.setAtivo(ativo);
+		return pessoaRepository.save(pessoaSalva);
+	}
+	
+	public Pessoa atualizarPropEndereco(Long codigo, Endereco endereco) {
+		Pessoa pessoaSalva = pessoaRepository.findById(codigo).orElseThrow();
+		pessoaSalva.setEndereco(endereco);
 		return pessoaRepository.save(pessoaSalva);
 	}
 }
