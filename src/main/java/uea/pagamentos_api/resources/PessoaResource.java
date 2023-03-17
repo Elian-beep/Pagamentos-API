@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import uea.pagamentos_api.dto.ResumoPessoaDto;
 import uea.pagamentos_api.models.Endereco;
 import uea.pagamentos_api.models.Pessoa;
+import uea.pagamentos_api.repositories.filters.PessoaFilter;
 import uea.pagamentos_api.services.PessoaService;
 
 @RestController //Vai ser um endpoint
@@ -31,10 +33,16 @@ public class PessoaResource {
 		return ResponseEntity.ok().body(pessoaSalva);
 	}
 	
+//	@GetMapping
+//	public ResponseEntity<List<Pessoa>> listar(){
+//		List<Pessoa> pessoas = pessoaService.listar();
+//		return ResponseEntity.ok().body(pessoas);
+//	}
+	
 	@GetMapping
-	public ResponseEntity<List<Pessoa>> listar(){
-		List<Pessoa> pessoas = pessoaService.listar();
-		return ResponseEntity.ok().body(pessoas);
+	public ResponseEntity<List<ResumoPessoaDto>> resumir(PessoaFilter pessoaFilter){
+		List<ResumoPessoaDto> resumos = pessoaService.resumir(pessoaFilter);
+		return ResponseEntity.ok().body(resumos);
 	}
 	
 	@GetMapping(value = "/{codigo}")
