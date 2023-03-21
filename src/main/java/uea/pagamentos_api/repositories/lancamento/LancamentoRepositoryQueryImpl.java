@@ -63,8 +63,8 @@ public class LancamentoRepositoryQueryImpl implements LancamentoRepositoryQuery 
 	}
 
 	private void adicionarRestricoesDePaginacao(TypedQuery<ResumoLancamentoDto> query, Pageable pageable) {
-		int paginaAtual = pageable.getPageNumber(), totalRegistroPagina = pageable.getPageSize(),
-				primeiroRegistroPagina = paginaAtual * totalRegistroPagina;
+		int paginaAtual = 1, totalRegistroPagina = pageable.getPageSize(),
+				primeiroRegistroPagina = (paginaAtual - 1) * totalRegistroPagina;
 		query.setFirstResult(primeiroRegistroPagina);
 		query.setMaxResults(totalRegistroPagina);
 	}
